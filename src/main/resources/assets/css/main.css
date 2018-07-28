@@ -1,0 +1,78 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100vh;
+}
+.header {
+    flex: 0 0 50px;
+    background-color: green;
+}
+.footer {
+    flex: 0 0 50px;
+    background-color: yellow;
+    height: 50px;
+    text-align: center;
+}
+.main {
+    flex: 1 0 auto;
+    padding-top: 20px;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+}
+
+.auctions {
+    margin-top: 60px;
+    vertical-align: baseline;
+    font-size: 22px;
+}
+
+.item_pic {
+    width: 100%;
+}
+
+.name {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.item_info {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    text-transform: uppercase;
+    color: #17a2b8;
+    padding-top: 13px;
+}
+.info-name{
+    text-align: center;
+    margin: 20px;
+}
+.info-make-bet{
+    margin: 30px;
+}
+.info-description{
+    margin-bottom: 20px;
+}
+.info-status{
+    color: green;
+}

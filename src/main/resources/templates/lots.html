@@ -1,0 +1,70 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+<header class="header">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand"><img src="../assets/img/logo.png" class="d-inline-block align-top logo-img" alt="Logo"></a>
+        <form class="form-inline">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
+        </form>
+    </nav>
+</header>
+
+
+<main class="main">
+
+    <section class="auctions">
+
+        <div class="container">
+
+            <div class="row" th:object="${lotList}">
+
+                <div class="col-lg-4 auction__item" th:each="lot :${lotList}">
+                    <img th:src="@{${lot.pictureLink}}" class="item_pic" alt="">  <!--th:src="@{${product.imgLink}}"-->
+                    <div class="name" th:text="${lot.name}">LOT_1</div>
+                    <div class="item_info">
+                        <div class="status" th:text="${lot.status}">Waiting</div>
+                        <div class="price" th:text="${lot.startPrice}">500 UAH</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+
+</main>
+
+<footer class="footer bg-dark">
+    <p>Spock 2018</p>
+</footer>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+</body>
+</html>
