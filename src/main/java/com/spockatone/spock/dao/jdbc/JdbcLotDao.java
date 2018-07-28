@@ -13,7 +13,8 @@ import java.util.List;
 
 public class JdbcLotDao implements LotDao {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcLotDao.class);
-    private static final String GET_BY_PAGE_SQL = "SELECT * FROM spock.public.lots LIMIT ? OFFSET ?;"; //TODO check
+    private static final String GET_BY_PAGE_SQL = "SELECT * FROM lots LIMIT ? OFFSET ?;"; //TODO check
+    private static final String GET_LOTS_COUNT_SQL = "SELECT COUNT(*) from lots;";
     private final static LotRawMapper LOT_RAW_MAPPER = new LotRawMapper();
 
     private DataSource dataSource;
@@ -42,6 +43,18 @@ public class JdbcLotDao implements LotDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int getLotsCount() {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_LOTS_COUNT_SQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            LOG.error("DB error during obtaining lots count from db", e);
+            throw new RuntimeException(e);
+        }    }
 
 
 }

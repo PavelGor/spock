@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LotsServlet extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(LotsServlet.class);
+
     private TemplateEngine templateEngine = ThymeleafPageGenerator.getInstance().getTemplateEngine();
     private LotService lotService;
 
@@ -29,11 +31,18 @@ public class LotsServlet extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext(), request.getLocale());
         Map<String, Object> pageVariables = new HashMap<>();
         response.setContentType("text/html;charset=utf-8");
-
-        //TODO pagination
-
-        List<Lot> lotList = lotService.getLotsByPage(1,6); //TODO: pageNumber, itemsOnPage
+        String pageParameter = request.getParameter("page");
+        int page;
+        try {
+            page = Integer.parseInt(pageParameter);
+        } catch (NumberFormatException num) {
+            page = 1;
+            LOG.error("Wrong page number,  page =  " + pageParameter, num);
+        }
+        List<Lot> lotList = lotService.getLotsByPage(page);
+        int pages = lotService.getLotsPagesCount();
         pageVariables.put("lotList", lotList);
+        pageVariables.put("pagesCount", pages);
 
         context.setVariables(pageVariables);
 

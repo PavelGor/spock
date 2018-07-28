@@ -36,6 +36,7 @@ public class Main {
 
         LotDao lotDao = new JdbcLotDao(dataSource);
         LotService lotService = new LotService(lotDao);
+        lotService.setItemsPerPage(properties.getProperty("itemsPerPage"));
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 

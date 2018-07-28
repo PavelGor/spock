@@ -32,8 +32,10 @@
             <div class="row" th:object="${lotList}">
 
                 <div class="col-lg-4 auction__item" th:each="lot :${lotList}">
-                    <img th:src="@{${lot.pictureLink}}" class="item_pic" alt="">  <!--th:src="@{${product.imgLink}}"-->
-                    <div class="name" th:text="${lot.name}">LOT_1</div>
+                    <a th:href="@{lot(id=${lot.id})}">
+                        <img th:src="@{${lot.pictureLink}}" class="item_pic" alt="">  <!--th:src="@{${product.imgLink}}"-->
+                        <div class="name" th:text="${lot.name}">LOT_1</div>
+                    </a>
                     <div class="item_info">
                         <div class="status" th:text="${lot.status}">Waiting</div>
                         <div class="price" th:text="${lot.startPrice}">500 UAH</div>
@@ -44,13 +46,17 @@
         </div>
     </section>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" th:if="${page<3}">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"  th:each="i : ${#numbers.sequence( 1, pagesCount)}"><a class="page-link" th:href="@{lots(page=${i})}" th:text="${i}">1</a></li>
+
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+        <ul class="pagination justify-content-center" th:if="${pagesCount>=6 and page>=3}">
+            <li class="page-item"  th:each="i : ${#numbers.sequence((page-2), (page+2))}"><a class="page-link" th:href="@{lots(page=${i})}" th:text="${i}">1</a></li>
+            <li>...</li>
+            <li class="page-item"><a class="page-link" th:href="@{lots(page=${pagesCount})}" th:text="${pagesCount}">1</a></li>
         </ul>
     </nav>
 
