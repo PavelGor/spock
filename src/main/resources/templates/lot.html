@@ -1,0 +1,88 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <title>Document</title>
+</head>
+<body>
+<header class="header">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand"  href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img" alt="Logo"></a>
+        <form class="form-inline">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
+        </form>
+    </nav>
+</header>
+
+<main class="main">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="item-pic col-5">
+                <img th:src="@{${lot.pictureLink}}" alt="">
+            </div>
+
+            <div class="info col-7 row  justify-content-between">
+
+                <h2 class="info-name col-12" th:text="${lot.name}"> Chocolate black </h2>
+
+                <div class="info-price-time row  col-12 justify-content-between">
+                    <div class="info-price row col-6">
+                        <p class="col-8">Стартовая цена</p>
+                        <p class="col-4" th:text="${lot.startPrice} + @{грн}">50 грн</p>
+                        <p class="col-8">Шаг</p>
+                        <!--add step after adding BetService-->
+                        <p class="col-4" th:text="${step} + @{грн}">10 грн</p>
+                        <p class="col-6">Текущая цена</p>
+                        <!--add (Name) after adding BetService-->
+                        <p class="col-6" th:text="${lot.currentPrice} + @{грн}">80 грн(Ваша)</p>
+                    </div>
+                    <div class="info-time row col-5">
+                        <p class="col-3">Начало:</p>
+                        <p class="col-9" th:text="${lot.startTime}">20.07.18 10.00</p>
+                        <p class="col-3">Конец:</p>
+                        <p class="col-9" th:text="${lot.endTime}">20.07.18 18.00</p>
+                    </div>
+                </div>
+
+                <div class="info-make-bet row col-12 justify-content-between">
+                    <button class="col-4 btn-outline-info bg-dark">Сделать ставку</button>
+                    <p class="info-status col-4" th:text="${lot.status}">В процессе</p>
+                </div>
+
+
+            </div>
+        </div>
+        <p class="info-description col-12" th:text="${lot.description}">
+            Небольшое описание товара, входящего в лот: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris justo tortor, maximus a rutrum vitae, mattis in purus. Phasellus eleifend mi ullamcorper velit vulputate, vel dignissim massa hendrerit. Donec mattis, quam ut sodales ultricies, ipsum libero ultrices ligula, nec tincidunt lorem magna in erat. Sed eu nisi maximus, gravida nisl sit amet, eleifend odio. Ut interdum augue sit amet quam consectetur laoreet. Pellentesque odio leo, sollicitudin id tortor non, commodo pretium mauris. Donec pulvinar, sapien in finibus tincidunt, elit elit laoreet metus, at efficitur sem magna sit amet purus. Vestibulum pharetra lobortis lectus, id cursus dolor porta et. Nullam scelerisque turpis sem, feugiat mattis metus vulputate at. Donec rutrum mauris diam, vel fermentum elit tempus eget. Nulla bibendum nunc sit amet hendrerit placerat. Fusce ac congue magna, ac vulputate orci. Duis porttitor dui aliquam urna sodales, in condimentum quam lacinia. Proin ut tempus lectus. Sed sodales vehicula aliquet. Vestibulum aliquam, diam vel consectetur sodales, est turpis tincidunt erat, vitae auctor justo ligula ac mauris.
+        </p>
+
+    </div>
+</main>
+
+<footer class="footer bg-dark">
+    <p>Spock 2018</p>
+</footer>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

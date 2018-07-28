@@ -16,4 +16,7 @@ public class LotService {
     public List<Lot> getLotsByPage(int pageNumber, int itemsOnPage){
         return lotDao.getLotsByPage(pageNumber, itemsOnPage);
     }
+    public Lot getLotById(int id){
+        return lotDao.getLotById(id);
+    }
 }

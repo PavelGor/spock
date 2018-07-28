@@ -13,7 +13,8 @@ import java.util.List;
 
 public class JdbcLotDao implements LotDao {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcLotDao.class);
-    private static final String GET_BY_PAGE_SQL = "SELECT * FROM spock.public.lots LIMIT ? OFFSET ?;"; //TODO check
+    private static final String GET_BY_PAGE_SQL = "SELECT * FROM spock.public.lots LIMIT ? OFFSET ?;"; //TODO check spock.public.lots
+    private static final String GET_BY_ID_SQL = "SELECT * FROM spock.public.lots where ID = ?;";
     private final static LotRawMapper LOT_RAW_MAPPER = new LotRawMapper();
 
     private DataSource dataSource;
@@ -43,5 +44,22 @@ public class JdbcLotDao implements LotDao {
         }
     }
 
+    @Override
+    public Lot getLotById(int id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) {
+                    LOG.warn("no lot found with id = " + id);
+                    throw new RuntimeException("no lot found with id = " + id);
+                }
+                return LOT_RAW_MAPPER.mapRaw(resultSet);
+            }
+        } catch (SQLException e) {
+            LOG.error("DB error during obtaining lots from db", e);
+            throw new RuntimeException(e);
+        }
+    }
 
 }
