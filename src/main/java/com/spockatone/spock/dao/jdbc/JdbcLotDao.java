@@ -13,10 +13,10 @@ import java.util.List;
 
 public class JdbcLotDao implements LotDao {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcLotDao.class);
-    private DataSource dataSource;
     private static final String GET_BY_PAGE_SQL = "SELECT * FROM spock.public.lots LIMIT ? OFFSET ?;"; //TODO check
+    private final static LotRawMapper LOT_RAW_MAPPER = new LotRawMapper();
 
-    private LotRawMapper lotRawMapper = new LotRawMapper();
+    private DataSource dataSource;
 
     public JdbcLotDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -33,12 +33,12 @@ public class JdbcLotDao implements LotDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 lots = new ArrayList<>();
                 while (resultSet.next()) {
-                    lots.add(lotRawMapper.mapRaw(resultSet));
+                    lots.add(LOT_RAW_MAPPER.mapRaw(resultSet));
                 }
                 return lots;
             }
         } catch (SQLException e) {
-            LOG.error("DB error during getLotsPyPage operation ", e);
+            LOG.error("DB error during obtaining lots from db", e);
             throw new RuntimeException(e);
         }
     }

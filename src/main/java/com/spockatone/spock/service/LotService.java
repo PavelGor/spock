@@ -16,16 +16,4 @@ public class LotService {
     public List<Lot> getLotsByPage(int pageNumber, int itemsOnPage){
         return lotDao.getLotsByPage(pageNumber, itemsOnPage);
     }
-
-    public Lot getLotById(int id){
-        return lotDao.getLotById(id);
-    }
-
-    public int getLotsCount(){
-        return lotDao.getLotsCount();
-    }
-
-    public void updateCurrentPrice(int lotId, int currentPrice){
-        lotDao.updateCurrentPrice(lotId, currentPrice);
-    }
 }

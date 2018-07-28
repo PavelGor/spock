@@ -3,7 +3,6 @@ package com.spockatone.spock;
 import com.spockatone.spock.dao.LotDao;
 import com.spockatone.spock.dao.jdbc.JdbcLotDao;
 import com.spockatone.spock.service.LotService;
-import com.spockatone.spock.web.filter.ContentTypeFilter;
 import com.spockatone.spock.web.servlet.AssetsServlet;
 import com.spockatone.spock.web.servlet.LotsServlet;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -13,12 +12,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.DispatcherType;
-import javax.sql.DataSource;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.EnumSet;
 import java.util.Properties;
 
 public class Main {
@@ -31,6 +25,7 @@ public class Main {
             properties.load(Main.class.getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException e) {
             LOG.info("bad file or properties in it");
+            throw new RuntimeException("Za4em dalwe gut? ", e);
         }
 
         BasicDataSource dataSource = new BasicDataSource();

@@ -13,7 +13,8 @@ public class ThymeleafPageGenerator {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCacheTTLMs(3600000L);
+        // TODO: Remove in PROD
+        templateResolver.setCacheable(false);
         templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
     }
