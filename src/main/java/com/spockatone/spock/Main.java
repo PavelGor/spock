@@ -2,8 +2,10 @@ package com.spockatone.spock;
 
 import com.spockatone.spock.dao.LotDao;
 import com.spockatone.spock.dao.jdbc.JdbcLotDao;
+import com.spockatone.spock.service.BetService;
 import com.spockatone.spock.service.LotService;
 import com.spockatone.spock.web.servlet.AssetsServlet;
+import com.spockatone.spock.web.servlet.LotServlet;
 import com.spockatone.spock.web.servlet.LotsServlet;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eclipse.jetty.server.Server;
@@ -37,10 +39,12 @@ public class Main {
         LotDao lotDao = new JdbcLotDao(dataSource);
         LotService lotService = new LotService(lotDao);
         lotService.setItemsPerPage(properties.getProperty("itemsPerPage"));
+        BetService betService = new BetService();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         context.addServlet(new ServletHolder(new LotsServlet(lotService)), "/");
+        context.addServlet(new ServletHolder(new LotServlet(lotService, betService)), "/lot/*");
         context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
 
         String portStr = System.getenv("PORT");

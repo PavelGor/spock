@@ -40,4 +40,7 @@ public class LotService {
             itemsPerPage = 6;
         }
     }
+    public Lot getLotById(int id){
+        return lotDao.getLotById(id);
+    }
 }
