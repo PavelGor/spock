@@ -1,13 +1,15 @@
 package com.spockatone.spock.service;
 
 import com.spockatone.spock.dao.BetDao;
+import com.spockatone.spock.dao.MessageDao;
 import com.spockatone.spock.entity.Lot;
 
 import java.time.LocalDateTime;
 
 public class BetService {
-    private int step = 5;//DEFAULT
+    private int step;
     private BetDao betDao;
+//    private MessageService messageService;
 
     public BetService(BetDao betDao) {
         this.betDao = betDao;
@@ -21,7 +23,7 @@ public class BetService {
         LocalDateTime time = LocalDateTime.now();
         int betId = betDao.makeBet(userId, lotId, price, time);
 
-        messageDao.sendMessages(betId);
+//        messageService.sendMessages(userId, lotId, price);
         //TODO add messages to all
     }
     public String getWinnerName(int lotId){
@@ -32,7 +34,7 @@ public class BetService {
         return "None";
     }
 
-    public double getCurrentPrice(Lot lot) {
+    public double getPriceForBet(Lot lot) {
         double currentPrice = lot.getCurrentPrice();
         if (currentPrice != 0){
             return currentPrice * (1 + step/100);

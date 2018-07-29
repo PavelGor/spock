@@ -12,6 +12,7 @@ import com.spockatone.spock.service.UserService;
 import com.spockatone.spock.service.security.SecurityService;
 import com.spockatone.spock.web.filter.SecurityFilter;
 import com.spockatone.spock.web.servlet.AssetsServlet;
+import com.spockatone.spock.web.servlet.BetServlet;
 import com.spockatone.spock.web.servlet.LotServlet;
 import com.spockatone.spock.web.servlet.LotsServlet;
 import com.spockatone.spock.web.servlet.security.LoginServlet;
@@ -66,6 +67,7 @@ public class Main {
         context.addServlet(new ServletHolder(new LoginServlet(userService, securityService)), "/login");
         context.addServlet(new ServletHolder(new LogoutServlet(securityService)), "/logout");
         context.addServlet(new ServletHolder(new LotServlet(lotService, betService, securityService)), "/lot/*");
+        context.addServlet(new ServletHolder(new BetServlet(lotService, betService, securityService)), "/bet");
         context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
 
         context.addFilter(new FilterHolder(new SecurityFilter(securityService)), "/cabinet", EnumSet.of(DispatcherType.REQUEST));
