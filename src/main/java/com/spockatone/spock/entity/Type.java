@@ -10,8 +10,8 @@ public enum Type {
     }
 
     public static Type getById(String id) {
-        for(Type type : values()){
-            if (type.id.equalsIgnoreCase(id)){
+        for (Type type : values()) {
+            if (type.id.equalsIgnoreCase(id)) {
                 return type;
             }
         }
@@ -19,9 +19,19 @@ public enum Type {
     }
 
 
-
     @Override
     public String toString() {
-        return Type.this.toString();
+        switch (this) {
+            case SUCCESS:
+                return "SUCCESS";
+            case WIN:
+                return "WIN";
+            case LOSE:
+                return "LOSE";
+            case FAILED:
+                return "FAILED";
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

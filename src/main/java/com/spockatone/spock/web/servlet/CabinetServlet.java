@@ -1,6 +1,7 @@
 package com.spockatone.spock.web.servlet;
 
 import com.spockatone.spock.entity.Message;
+import com.spockatone.spock.entity.Type;
 import com.spockatone.spock.entity.User;
 import com.spockatone.spock.service.MessageService;
 import com.spockatone.spock.service.security.SecurityService;
@@ -44,7 +45,7 @@ public class CabinetServlet extends HttpServlet {
             int userId = user.getId();
             List<Message> messages = messageService.getMessagesByUserId(userId);
                 pageVariables.put("messages", messages);
-        }
+            }
 
         context.setVariables(pageVariables);
 
