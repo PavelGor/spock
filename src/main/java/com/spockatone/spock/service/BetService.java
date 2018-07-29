@@ -6,7 +6,7 @@ import com.spockatone.spock.entity.Lot;
 import java.time.LocalDateTime;
 
 public class BetService {
-    private static int step = 5;//TODO get from properties
+    private int step = 5;//DEFAULT
     private BetDao betDao;
 
     public BetService(BetDao betDao) {
@@ -19,7 +19,10 @@ public class BetService {
 
     public void makeBet(int userId, int lotId, double price){
         LocalDateTime time = LocalDateTime.now();
-        betDao.makeBet(userId, lotId, price, time);
+        int betId = betDao.makeBet(userId, lotId, price, time);
+
+        messageDao.sendMessages(betId);
+        //TODO add messages to all
     }
     public String getWinnerName(int lotId){
         String winner = betDao.getWinnerName(lotId);
@@ -35,5 +38,9 @@ public class BetService {
             return currentPrice * (1 + step/100);
         }
         return lot.getStartPrice()  * (1 + step/100);
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }

@@ -60,7 +60,7 @@ public class LoginServlet  extends HttpServlet {
             cookie.setMaxAge(securityService.getSessionMaxLifeTime());
             response.addCookie(cookie);
             response.sendRedirect("/");
-            LOG.info("User: " + user.getUserName() + " logged in");
+            LOG.info("User: {} logged in", user.getUserName());
         } catch (SecurityException e) {
             response.sendRedirect("/login");
         }

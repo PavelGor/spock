@@ -2,11 +2,14 @@ package com.spockatone.spock.service;
 
 import com.spockatone.spock.dao.UserDao;
 import com.spockatone.spock.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class UserService {
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private UserDao userDao;
 
     public UserService(UserDao userDao) {
@@ -34,7 +37,7 @@ public class UserService {
         try {
             messageDigest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LOG.info("Security: no such algorithm: MD5");
         }
         byte bytes[] = text.getBytes();
         byte digest[] = new byte[0];

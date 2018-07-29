@@ -49,7 +49,7 @@ public class LotsServlet extends HttpServlet {
             page = Integer.parseInt(pageParameter);
         } catch (NumberFormatException num) {
             page = 1;
-            LOG.error("Wrong page number,  page =  " + pageParameter, num);
+            LOG.error(String.format("Wrong page number,  page =  %s", pageParameter), num);
         }
         List<Lot> lotList = lotService.getLotsByPage(page);
         int pages = lotService.getLotsPagesCount();

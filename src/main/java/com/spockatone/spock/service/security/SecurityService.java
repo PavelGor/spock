@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SecurityService {
-    private int SESSION_MAX_LIFE_TIME = 300; //TODO: get from properties
+    private int sessionMaxLifeTime = 300; //DEFAULT
     private List<Session> sessionList = new ArrayList<>();
 
     public Optional<Session> getSession(String token) {
@@ -70,7 +70,11 @@ public class SecurityService {
     }
 
     public int getSessionMaxLifeTime() {
-        return SESSION_MAX_LIFE_TIME;
+        return sessionMaxLifeTime;
+    }
+
+    public void setSessionMaxLifeTime(int sessionMaxLifeTime) {
+        this.sessionMaxLifeTime = sessionMaxLifeTime;
     }
 }
 

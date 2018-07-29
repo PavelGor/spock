@@ -49,13 +49,16 @@ public class Main {
         dataSource.setDriverClassName(properties.getProperty("db.className"));
 
         LotDao lotDao = new JdbcLotDao(dataSource);
+        BetDao betDao = new JdbcBetDao(dataSource);
+        UserDao userDao = new JdbcUserDao(dataSource);
+
+        BetService betService = new BetService(betDao);
+        betService.setStep(Integer.parseInt(properties.getProperty("step")));
+        UserService userService = new UserService(userDao);
+        SecurityService securityService = new SecurityService();
+        securityService.setSessionMaxLifeTime(Integer.parseInt(properties.getProperty("sessionMaxLifeTime")));
         LotService lotService = new LotService(lotDao);
         lotService.setItemsPerPage(properties.getProperty("itemsPerPage"));
-        BetDao betDao = new JdbcBetDao(dataSource);
-        BetService betService = new BetService(betDao);
-        SecurityService securityService = new SecurityService();
-        UserDao userDao = new JdbcUserDao(dataSource);
-        UserService userService = new UserService(userDao);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
