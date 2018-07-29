@@ -1,20 +1,32 @@
 package com.spockatone.spock;
 
+import com.spockatone.spock.dao.BetDao;
 import com.spockatone.spock.dao.LotDao;
+import com.spockatone.spock.dao.UserDao;
+import com.spockatone.spock.dao.jdbc.JdbcBetDao;
 import com.spockatone.spock.dao.jdbc.JdbcLotDao;
+import com.spockatone.spock.dao.jdbc.JdbcUserDao;
 import com.spockatone.spock.service.BetService;
 import com.spockatone.spock.service.LotService;
+import com.spockatone.spock.service.UserService;
+import com.spockatone.spock.service.security.SecurityService;
+import com.spockatone.spock.web.filter.SecurityFilter;
 import com.spockatone.spock.web.servlet.AssetsServlet;
 import com.spockatone.spock.web.servlet.LotServlet;
 import com.spockatone.spock.web.servlet.LotsServlet;
+import com.spockatone.spock.web.servlet.security.LoginServlet;
+import com.spockatone.spock.web.servlet.security.LogoutServlet;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.DispatcherType;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.Properties;
 
 public class Main {
@@ -27,7 +39,7 @@ public class Main {
             properties.load(Main.class.getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException e) {
             LOG.info("bad file or properties in it");
-            throw new RuntimeException("Za4em dalwe gut? ", e);
+            throw new RuntimeException("bad file or properties in it", e);
         }
 
         BasicDataSource dataSource = new BasicDataSource();
@@ -39,13 +51,21 @@ public class Main {
         LotDao lotDao = new JdbcLotDao(dataSource);
         LotService lotService = new LotService(lotDao);
         lotService.setItemsPerPage(properties.getProperty("itemsPerPage"));
-        BetService betService = new BetService();
+        BetDao betDao = new JdbcBetDao(dataSource);
+        BetService betService = new BetService(betDao);
+        SecurityService securityService = new SecurityService();
+        UserDao userDao = new JdbcUserDao(dataSource);
+        UserService userService = new UserService(userDao);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        context.addServlet(new ServletHolder(new LotsServlet(lotService)), "/");
-        context.addServlet(new ServletHolder(new LotServlet(lotService, betService)), "/lot/*");
+        context.addServlet(new ServletHolder(new LotsServlet(lotService, securityService)), "/");
+        context.addServlet(new ServletHolder(new LoginServlet(userService, securityService)), "/login");
+        context.addServlet(new ServletHolder(new LogoutServlet(securityService)), "/logout");
+        context.addServlet(new ServletHolder(new LotServlet(lotService, betService, securityService)), "/lot/*");
         context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
+
+        context.addFilter(new FilterHolder(new SecurityFilter(securityService)), "/cabinet", EnumSet.of(DispatcherType.REQUEST));
 
         String portStr = System.getenv("PORT");
         int port = portStr == null ? 8080 : Integer.valueOf(portStr);
