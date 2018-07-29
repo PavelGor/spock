@@ -70,7 +70,7 @@ public class JdbcLotDao implements LotDao {
                 return LOT_RAW_MAPPER.mapRaw(resultSet);
             }
         } catch (SQLException e) {
-            LOG.error("DB error during obtaining lots from db", e);
+            LOG.error("no lot found with id = " + id, e);
             throw new RuntimeException(e);
         }
     }

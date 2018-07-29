@@ -15,9 +15,17 @@
 <header class="header">
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand"  href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img" alt="Logo"></a>
-        <form class="form-inline">
+
+        <form class="form-inline" method="get" action="/">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Lots</button>
+        </form>
+        <form class="form-inline" method="get" action="/login" th:if="${userName==null}">
             <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
         </form>
+        <form class="form-inline" method="post" action="/logout"  th:if="${userName!=null}">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" th:text="@{Logout:} + ${userName}"></button>
+        </form>
+
     </nav>
 </header>
 
@@ -39,11 +47,9 @@
                         <p class="col-8">Стартовая цена</p>
                         <p class="col-4" th:text="${lot.startPrice} + @{грн}">50 грн</p>
                         <p class="col-8">Шаг</p>
-                        <!--add step after adding BetService-->
                         <p class="col-4" th:text="${step} + @{грн}">10 грн</p>
-                        <p class="col-6">Текущая цена</p>
-                        <!--add (Name) after adding BetService-->
-                        <p class="col-6" th:text="${lot.currentPrice} + @{грн}">80 грн(Ваша)</p>
+                        <p class="col-6" th:if="${lot.currentPrice!=0.0}">Текущая цена</p>
+                        <p class="col-6" th:if="${lot.currentPrice!=0.0 and userName!=null}" th:text="${lot.currentPrice} + @{грн} + ${winner}">80 грн(Ваша)</p>
                     </div>
                     <div class="info-time row col-5">
                         <p class="col-3">Начало:</p>
@@ -54,7 +60,7 @@
                 </div>
 
                 <div class="info-make-bet row col-12 justify-content-between">
-                    <button class="col-4 btn-outline-info bg-dark">Сделать ставку</button>
+                    <button class="col-4 btn-outline-info bg-dark" th:if="${userName!=null}">Сделать ставку</button>
                     <p class="info-status col-4" th:text="${lot.status}">В процессе</p>
                 </div>
 

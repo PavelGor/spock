@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class AssetsServlet extends HttpServlet {
+    private static final int RESOURCE_START_INDEX = 1;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        File file = new File(".",req.getRequestURI());
-        try (InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(file.getPath())){
+        String resourcePath = req.getRequestURI().substring(RESOURCE_START_INDEX);
+        try (InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(resourcePath)){
             byte[] buffer = new byte[8192];
             int count;
             while ((count = resourceAsStream.read(buffer)) != -1){
