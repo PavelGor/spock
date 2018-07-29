@@ -82,7 +82,7 @@ create table messages
 			references users,
 	type varchar not null,
 	message_text varchar not null,
-	viewed boolean not null
+	viewed boolean not null default FALSE
 )
 ;
 
