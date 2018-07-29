@@ -60,6 +60,6 @@ INSERT INTO Lots (name, description, start_price, current_price, start_time, end
 VALUES ('Бассейн детский надувной Jilong(с детьми)', 'Надувной бассейн Jilong 10271 подходит для детей от 2 до 6 лет. Бассейн рассчитан на нескольких человек. Широкие борта позволят взрослым присесть, а детям играть на них. В высоту бассейн Jilong 10271 имеет три горизонтальные, независимые раздельные камеры, с выпускными клапанами. Что может быть лучше в сухую, жаркую, летнюю погоду, чем окунуться в прохладу бассейна?',
 50, 100000000, '2018-04-09 15:30:00', '2018-10-30 15:30:00', 'A', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq4vcpzhq2wwaiWOKiN1HoFs4dybe9zLiWgD36yb17ltmjkSW-Cg');
 
-INSERT INTO users(id, login, password, salt) VALUES (1, user, 5cc32e366c87c4cb49e4309b75f57d64, user);
+INSERT INTO users(id, login, password, salt) VALUES (1, 'user', '5cc32e366c87c4cb49e4309b75f57d64', 'user');
 
-INSERT INTO users(id, login, password, salt) VALUES (2, shel, f525af711de18be19fb19afa05b1eba5, shel);
+INSERT INTO users(id, login, password, salt) VALUES (2, 'shel', 'f525af711de18be19fb19afa05b1eba5', 'shel');

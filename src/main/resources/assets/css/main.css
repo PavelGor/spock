@@ -9,16 +9,13 @@ body {
     align-items: stretch;
     min-height: 100vh;
 }
+
+/*HEADER*/
 .header {
     flex: 0 0 50px;
     background-color: green;
 }
-.footer {
-    flex: 0 0 50px;
-    background-color: yellow;
-    height: 50px;
-    text-align: center;
-}
+
 .main {
     flex: 1 0 auto;
     padding-top: 20px;
@@ -29,6 +26,7 @@ body {
     height: 40px;
 }
 
+/*LOTS*/
 .auctions {
     margin-top: 60px;
     vertical-align: baseline;
@@ -38,7 +36,6 @@ body {
 .item_pic {
     width: 400px;
     height: 300px;
-
 }
 
 .name {
@@ -60,11 +57,7 @@ body {
     margin-bottom: 10px;
 }
 
-footer p {
-    text-transform: uppercase;
-    color: #17a2b8;
-    padding-top: 13px;
-}
+/*LOT DETAILS*/
 .info-name{
     text-align: center;
     margin: 20px;
@@ -77,4 +70,49 @@ footer p {
 }
 .info-status{
     color: green;
+}
+
+/*MESSAGES*/
+.messages {
+    height: 800px;
+    font-family: Arial;
+}
+.messages__item {
+    display: flex;
+    text-align: center;
+    font-size: 19px;
+    padding: 10px;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+.messages__item__icon {
+    width: 10%;
+}
+
+.messages__item__lot-name {
+    width: 20%;
+}
+
+.messages__item__text {
+    width: 50%;
+}
+
+.messages__item__date-time {
+    width: 20%;
+}
+
+/*FOOTER*/
+.footer {
+    flex: 0 0 50px;
+    background-color: yellow;
+    height: 50px;
+    text-align: center;
+}
+
+footer p {
+    text-transform: uppercase;
+    color: #17a2b8;
+    padding-top: 13px;
 }

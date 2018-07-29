@@ -2,16 +2,20 @@ package com.spockatone.spock;
 
 import com.spockatone.spock.dao.BetDao;
 import com.spockatone.spock.dao.LotDao;
+import com.spockatone.spock.dao.MessageDao;
 import com.spockatone.spock.dao.UserDao;
 import com.spockatone.spock.dao.jdbc.JdbcBetDao;
 import com.spockatone.spock.dao.jdbc.JdbcLotDao;
+import com.spockatone.spock.dao.jdbc.JdbcMessageDao;
 import com.spockatone.spock.dao.jdbc.JdbcUserDao;
 import com.spockatone.spock.service.BetService;
 import com.spockatone.spock.service.LotService;
+import com.spockatone.spock.service.MessageService;
 import com.spockatone.spock.service.UserService;
 import com.spockatone.spock.service.security.SecurityService;
 import com.spockatone.spock.web.filter.SecurityFilter;
 import com.spockatone.spock.web.servlet.AssetsServlet;
+import com.spockatone.spock.web.servlet.CabinetServlet;
 import com.spockatone.spock.web.servlet.LotServlet;
 import com.spockatone.spock.web.servlet.LotsServlet;
 import com.spockatone.spock.web.servlet.security.LoginServlet;
@@ -57,12 +61,17 @@ public class Main {
         UserDao userDao = new JdbcUserDao(dataSource);
         UserService userService = new UserService(userDao);
 
+        MessageDao messageDao = new JdbcMessageDao(dataSource);
+        MessageService messageService = new MessageService(messageDao);
+
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         context.addServlet(new ServletHolder(new LotsServlet(lotService, securityService)), "/");
         context.addServlet(new ServletHolder(new LoginServlet(userService, securityService)), "/login");
         context.addServlet(new ServletHolder(new LogoutServlet(securityService)), "/logout");
         context.addServlet(new ServletHolder(new LotServlet(lotService, betService, securityService)), "/lot/*");
+        context.addServlet(new ServletHolder(new CabinetServlet(messageService, securityService)), "/cabinet");
         context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
 
         context.addFilter(new FilterHolder(new SecurityFilter(securityService)), "/cabinet", EnumSet.of(DispatcherType.REQUEST));

@@ -1,6 +1,7 @@
 package com.spockatone.spock.service;
 
 import com.spockatone.spock.dao.BetDao;
+import com.spockatone.spock.entity.Bet;
 import com.spockatone.spock.entity.Lot;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class BetService {
         LocalDateTime time = LocalDateTime.now();
         betDao.makeBet(userId, lotId, price, time);
     }
+
     public String getWinnerName(int lotId){
         String winner = betDao.getWinnerName(lotId);
         if (winner != null){
@@ -35,5 +37,9 @@ public class BetService {
             return currentPrice * (1 + step/100);
         }
         return lot.getStartPrice()  * (1 + step/100);
+    }
+
+    public Bet getBetById(int id){
+        return betDao.getBetById(id);
     }
 }

@@ -49,11 +49,11 @@ public class JdbcMessageDao implements MessageDao {
     }
 
     @Override
-    public void insertMessage(int userId, Type type, String messageText) {
+    public void insertMessage(int userId, String type, String messageText) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MESSAGE_SQL)) {
             preparedStatement.setInt(1, userId);
-            preparedStatement.setString(2, type.toString());
+            preparedStatement.setString(2, type);
             preparedStatement.setString(3, messageText);
             preparedStatement.executeQuery();
         } catch (SQLException e) {
