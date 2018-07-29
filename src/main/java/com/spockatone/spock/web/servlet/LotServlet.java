@@ -1,6 +1,7 @@
 package com.spockatone.spock.web.servlet;
 
 import com.spockatone.spock.entity.Lot;
+import com.spockatone.spock.entity.Status;
 import com.spockatone.spock.entity.User;
 import com.spockatone.spock.service.BetService;
 import com.spockatone.spock.service.LotService;
@@ -48,6 +49,9 @@ public class LotServlet extends HttpServlet {
 
         pageVariables.put("step", betService.getStep()*lot.getStartPrice()/100);
         pageVariables.put("winner", betService.getWinnerName(lotId));
+        if (lot.getStatus() == Status.ACTIVE){
+            pageVariables.put("isActive", "1");
+        }
 
         context.setVariables(pageVariables);
 
@@ -63,7 +67,7 @@ public class LotServlet extends HttpServlet {
         Optional<User> optionalUser = securityService.getUser(securityService.getToken(request));
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
-            betService.makeBet(user.getId(), lotId, betService.getCurrentPrice(lot));
+            betService.makeBet(user.getId(), lotId, betService.getPriceForBet(lot));
         }
 
         response.sendRedirect("/cabinet");

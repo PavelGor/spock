@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class SecurityService {
-    private int SESSION_MAX_LIFE_TIME = 300; //TODO: get from properties
+    private int sessionMaxLifeTime;
     private List<Session> sessionList = new ArrayList<>();
 
     public Optional<Session> getSession(String token) {
@@ -70,7 +71,25 @@ public class SecurityService {
     }
 
     public int getSessionMaxLifeTime() {
-        return SESSION_MAX_LIFE_TIME;
+        return sessionMaxLifeTime;
+    }
+
+    public void setSessionMaxLifeTime(int sessionMaxLifeTime) {
+        this.sessionMaxLifeTime = sessionMaxLifeTime;
+    }
+
+    public String createSession(User user) {
+        String token = UUID.randomUUID().toString();
+
+        Session session = new Session();
+        session.setUser(user);
+        session.setToken(token);
+
+        LocalDateTime time = LocalDateTime.now().plusSeconds(getSessionMaxLifeTime());
+        session.setExpireTime(time);
+        add(session);
+
+        return token;
     }
 }
 

@@ -29,13 +29,13 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(1, login);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (!resultSet.next()) {
-                    LOG.error("there is no such user with login = " + login);
+                    LOG.error("there is no such user with login = {}", login);
                     throw new RuntimeException("there is no such user with login" + login);
                 }
                 return userRawMapper.mapRaw(resultSet);
             }
         } catch (SQLException e) {
-            LOG.error("Cannot find user with login: " + login, e);
+            LOG.error(String.format("Cannot find user with login: %s", login), e);
             throw new RuntimeException(e);
         }
     }

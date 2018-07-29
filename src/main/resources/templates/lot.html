@@ -14,18 +14,23 @@
 <body>
 <header class="header">
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand"  href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img" alt="Logo"></a>
-
-        <form class="form-inline" method="get" action="/">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Lots</button>
-        </form>
-        <form class="form-inline" method="get" action="/login" th:if="${userName==null}">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
-        </form>
-        <form class="form-inline" method="post" action="/logout"  th:if="${userName!=null}">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" th:text="@{Logout:} + ${userName}"></button>
-        </form>
-
+        <a class="navbar-brand" href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img"
+                                              alt="Logo"></a>
+        <div class="btns">
+            <form class="form-inline" method="get" action="/">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Lots</button>
+            </form>
+            <form class="form-inline" method="get" action="/cabinet" th:if="${userName!=null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cabinet</button>
+            </form>
+            <form class="form-inline" method="get" action="/login" th:if="${userName==null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
+            </form>
+            <form class="form-inline" method="post" action="/logout" th:if="${userName!=null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit"
+                        th:text="@{Logout:} + ${userName}"></button>
+            </form>
+        </div>
     </nav>
 </header>
 
@@ -48,8 +53,9 @@
                         <p class="col-4" th:text="${lot.startPrice} + @{грн}">50 грн</p>
                         <p class="col-8">Шаг</p>
                         <p class="col-4" th:text="${step} + @{грн}">10 грн</p>
-                        <p class="col-6" th:if="${lot.currentPrice!=0.0}">Текущая цена</p>
-                        <p class="col-6" th:if="${lot.currentPrice!=0.0 and userName!=null}" th:text="${lot.currentPrice} + @{грн} + ${winner}">80 грн(Ваша)</p>
+                        <p class="col-6" th:if="${lot.currentPrice!=0.0 and userName!=null}">Текущая цена</p>
+                        <p class="col-6" th:if="${lot.currentPrice!=0.0 and userName!=null}"
+                           th:text="${lot.currentPrice} + @{грн} + ${winner}">80 грн(Ваша)</p>
                     </div>
                     <div class="info-time row col-5">
                         <p class="col-3">Начало:</p>
@@ -60,7 +66,11 @@
                 </div>
 
                 <div class="info-make-bet row col-12 justify-content-between">
-                    <button class="col-4 btn-outline-info bg-dark" th:if="${userName!=null}">Сделать ставку</button>
+                    <form method="post" action="/bet?id=1" th:if="${userName!=null}">
+                        <button class="col-4 btn-outline-info bg-dark" th:if="${userName!=null and isActive==1}"
+                                type="submit">Сделать ставку
+                        </button>
+                    </form>
                     <p class="info-status col-4" th:text="${lot.status}">В процессе</p>
                 </div>
 
@@ -68,7 +78,17 @@
             </div>
         </div>
         <p class="info-description col-12" th:text="${lot.description}">
-            Небольшое описание товара, входящего в лот: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris justo tortor, maximus a rutrum vitae, mattis in purus. Phasellus eleifend mi ullamcorper velit vulputate, vel dignissim massa hendrerit. Donec mattis, quam ut sodales ultricies, ipsum libero ultrices ligula, nec tincidunt lorem magna in erat. Sed eu nisi maximus, gravida nisl sit amet, eleifend odio. Ut interdum augue sit amet quam consectetur laoreet. Pellentesque odio leo, sollicitudin id tortor non, commodo pretium mauris. Donec pulvinar, sapien in finibus tincidunt, elit elit laoreet metus, at efficitur sem magna sit amet purus. Vestibulum pharetra lobortis lectus, id cursus dolor porta et. Nullam scelerisque turpis sem, feugiat mattis metus vulputate at. Donec rutrum mauris diam, vel fermentum elit tempus eget. Nulla bibendum nunc sit amet hendrerit placerat. Fusce ac congue magna, ac vulputate orci. Duis porttitor dui aliquam urna sodales, in condimentum quam lacinia. Proin ut tempus lectus. Sed sodales vehicula aliquet. Vestibulum aliquam, diam vel consectetur sodales, est turpis tincidunt erat, vitae auctor justo ligula ac mauris.
+            Небольшое описание товара, входящего в лот: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+            justo tortor, maximus a rutrum vitae, mattis in purus. Phasellus eleifend mi ullamcorper velit vulputate,
+            vel dignissim massa hendrerit. Donec mattis, quam ut sodales ultricies, ipsum libero ultrices ligula, nec
+            tincidunt lorem magna in erat. Sed eu nisi maximus, gravida nisl sit amet, eleifend odio. Ut interdum augue
+            sit amet quam consectetur laoreet. Pellentesque odio leo, sollicitudin id tortor non, commodo pretium
+            mauris. Donec pulvinar, sapien in finibus tincidunt, elit elit laoreet metus, at efficitur sem magna sit
+            amet purus. Vestibulum pharetra lobortis lectus, id cursus dolor porta et. Nullam scelerisque turpis sem,
+            feugiat mattis metus vulputate at. Donec rutrum mauris diam, vel fermentum elit tempus eget. Nulla bibendum
+            nunc sit amet hendrerit placerat. Fusce ac congue magna, ac vulputate orci. Duis porttitor dui aliquam urna
+            sodales, in condimentum quam lacinia. Proin ut tempus lectus. Sed sodales vehicula aliquet. Vestibulum
+            aliquam, diam vel consectetur sodales, est turpis tincidunt erat, vitae auctor justo ligula ac mauris.
         </p>
 
     </div>

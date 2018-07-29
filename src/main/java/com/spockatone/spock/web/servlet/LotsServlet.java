@@ -44,13 +44,8 @@ public class LotsServlet extends HttpServlet {
         }
 
         String pageParameter = request.getParameter("page");
-        int page;
-        try { //TODO не проще псделать проверку на нулл и не захламлять? В смысле зачем именно исключение то?
-            page = Integer.parseInt(pageParameter);
-        } catch (NumberFormatException num) {
-            page = 1;
-            LOG.error("Wrong page number,  page =  " + pageParameter, num);
-        }
+        int page = (pageParameter != null) ? Integer.parseInt(pageParameter) : 1;
+
         List<Lot> lotList = lotService.getLotsByPage(page);
         int pages = lotService.getLotsPagesCount();
         pageVariables.put("lotList", lotList);

@@ -2,13 +2,15 @@ package com.spockatone.spock.service;
 
 import com.spockatone.spock.dao.BetDao;
 import com.spockatone.spock.entity.Bet;
+import com.spockatone.spock.dao.MessageDao;
 import com.spockatone.spock.entity.Lot;
 
 import java.time.LocalDateTime;
 
 public class BetService {
-    private static int step = 5;//TODO get from properties
+    private int step;
     private BetDao betDao;
+//    private MessageService messageService;
 
     public BetService(BetDao betDao) {
         this.betDao = betDao;
@@ -18,28 +20,35 @@ public class BetService {
         return step;
     }
 
-    public void makeBet(int userId, int lotId, double price){
+    public void makeBet(int userId, int lotId, double price) {
         LocalDateTime time = LocalDateTime.now();
-        betDao.makeBet(userId, lotId, price, time);
+        int betId = betDao.makeBet(userId, lotId, price, time);
+
+//        messageService.sendMessages(userId, lotId, price);
+        //TODO add messages to all
     }
 
-    public String getWinnerName(int lotId){
+    public String getWinnerName(int lotId) {
         String winner = betDao.getWinnerName(lotId);
-        if (winner != null){
+        if (winner != null) {
             return winner;
         }
         return "None";
     }
 
-    public double getCurrentPrice(Lot lot) {
+    public double getPriceForBet(Lot lot) {
         double currentPrice = lot.getCurrentPrice();
-        if (currentPrice != 0){
-            return currentPrice * (1 + step/100);
+        if (currentPrice != 0) {
+            return currentPrice * (1 + step / 100);
         }
-        return lot.getStartPrice()  * (1 + step/100);
+        return lot.getStartPrice() * (1 + step / 100);
     }
 
-    public Bet getBetById(int id){
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    public Bet getBetById(int id) {
         return betDao.getBetById(id);
     }
 }

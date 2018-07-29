@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
                     String token = cookie.getValue();
                     Optional<Session> optionalSession = securityService.getSession(token);
                     if (optionalSession.isPresent()){
-                        LOG.info("User: " + optionalSession.get().getUser().getUserName() + " logout");
+                        LOG.info("User: {} logout", optionalSession.get().getUser().getUserName());
                         securityService.removeSession(token);
                     }
                     break;

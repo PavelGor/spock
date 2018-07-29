@@ -72,6 +72,14 @@ body {
     color: green;
 }
 
+.btns{
+    display: flex;
+    justify-content: flex-end;
+}
+.form-inline{
+    margin: 10px;
+}
+
 /*MESSAGES*/
 .messages {
     height: 800px;

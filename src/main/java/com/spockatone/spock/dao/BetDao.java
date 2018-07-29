@@ -5,7 +5,7 @@ import com.spockatone.spock.entity.Bet;
 import java.time.LocalDateTime;
 
 public interface BetDao {
-    void makeBet(int userId, int lotId, double price, LocalDateTime time);
+    int makeBet(int userId, int lotId, double price, LocalDateTime time);
     String getWinnerName(int lotId);
     Bet getBetById(int id);
 }

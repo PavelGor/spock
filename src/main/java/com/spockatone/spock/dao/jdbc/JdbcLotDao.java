@@ -14,9 +14,9 @@ import java.util.List;
 public class JdbcLotDao implements LotDao {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcLotDao.class);
 
-    private static final String GET_BY_PAGE_SQL = "SELECT * FROM spock.public.lots LIMIT ? OFFSET ?;"; //TODO check spock.public.lots
+    private static final String GET_BY_PAGE_SQL = "SELECT * FROM lots LIMIT ? OFFSET ?;"; //TODO check spock.public.lots
     private static final String GET_LOTS_COUNT_SQL = "SELECT COUNT(*) from lots;";
-    private static final String GET_BY_ID_SQL = "SELECT * FROM spock.public.lots where ID = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT * FROM lots where ID = ?;";
     private static final LotRawMapper LOT_RAW_MAPPER = new LotRawMapper();
 
     private DataSource dataSource;

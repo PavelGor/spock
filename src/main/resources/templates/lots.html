@@ -16,18 +16,19 @@
 
 <header class="header">
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img"
-                                              alt="Logo"></a>
-        <form class="form-inline" method="get" action="/login" th:if="${userName==null}">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
-        </form>
-        <form class="form-inline" method="get" action="/cabinet" th:if="${userName!=null}">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cabinet</button>
-        </form>
-        <form class="form-inline" method="post" action="/logout" th:if="${userName!=null}">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" th:text="@{Logout:} + ${userName}"></button>
-        </form>
-
+        <a class="navbar-brand" href="/"><img src="assets/img/logo.png" class="d-inline-block align-top logo-img" alt="Logo"></a>
+        <div class="btns">
+            <form class="form-inline" method="get" action="/login" th:if="${userName==null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login</button>
+            </form>
+            <form class="form-inline" method="get" action="/cabinet" th:if="${userName!=null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cabinet</button>
+            </form>
+            <form class="form-inline" method="post" action="/logout" th:if="${userName!=null}">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit"
+                        th:text="@{Logout:} + ${userName}"></button>
+            </form>
+        </div>
     </nav>
 </header>
 
