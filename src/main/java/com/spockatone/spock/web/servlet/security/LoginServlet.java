@@ -45,7 +45,7 @@ public class LoginServlet  extends HttpServlet {
 
         try {
             String token;
-            User user = userService.autenticate(login, password);
+            User user = userService.authenticate(login, password);
             Optional<Session> optionalSession = securityService.getSession(user);
 
             if(optionalSession.isPresent()){

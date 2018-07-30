@@ -2,19 +2,18 @@ package com.spockatone.spock.service;
 
 import com.spockatone.spock.dao.BetDao;
 import com.spockatone.spock.entity.Bet;
-import com.spockatone.spock.dao.MessageDao;
 import com.spockatone.spock.entity.Lot;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class BetService {
+    private static final UserService USER_SERVICE = new UserService();
+    private static final MessageService MESSAGE_SERVICE = new MessageService();
     private int step;
-    private BetDao betDao;
-//    private MessageService messageService;
 
-    public BetService(BetDao betDao) {
-        this.betDao = betDao;
-    }
+    private BetDao betDao;
+
 
     public int getStep() {
         return step;
@@ -24,12 +23,12 @@ public class BetService {
         LocalDateTime time = LocalDateTime.now();
         int betId = betDao.makeBet(userId, lotId, price, time);
 
-//        messageService.sendMessages(userId, lotId, price);
-        //TODO add messages to all
+        MESSAGE_SERVICE.sendMessagesAfterBet(betId);
     }
 
     public String getWinnerName(int lotId) {
-        String winner = betDao.getWinnerName(lotId);
+        int winnerId = betDao.getWinnerUserId(lotId);
+        String winner = USER_SERVICE.getUserNameById(winnerId);
         if (winner != null) {
             return winner;
         }
@@ -50,5 +49,13 @@ public class BetService {
 
     public Bet getBetById(int id) {
         return betDao.getBetById(id);
+    }
+
+    public List<Integer> getFailedUsersByBetId(int lotId){
+        return betDao.getFailedUsersByBetId(lotId);
+    }
+
+    public void setBetDao(BetDao betDao) {
+        this.betDao = betDao;
     }
 }

@@ -4,4 +4,5 @@ import com.spockatone.spock.entity.User;
 
 public interface UserDao {
     User getByLogin(String login);
+    String getUserNameById(int id);
 }

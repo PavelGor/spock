@@ -57,16 +57,19 @@ public class Main {
         BetDao betDao = new JdbcBetDao(dataSource);
         UserDao userDao = new JdbcUserDao(dataSource);
 
-        BetService betService = new BetService(betDao);
+        BetService betService = new BetService();
+        betService.setBetDao(betDao);
         betService.setStep(Integer.parseInt(properties.getProperty("step")));
-        UserService userService = new UserService(userDao);
+        UserService userService = new UserService();
+        userService.setUserDao(userDao);
         SecurityService securityService = new SecurityService();
         securityService.setSessionMaxLifeTime(Integer.parseInt(properties.getProperty("sessionMaxLifeTime")));
         LotService lotService = new LotService(lotDao);
         lotService.setItemsPerPage(properties.getProperty("itemsPerPage"));
 
         MessageDao messageDao = new JdbcMessageDao(dataSource);
-        MessageService messageService = new MessageService(messageDao);
+        MessageService messageService = new MessageService();
+        messageService.setMessageDao(messageDao);
 
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);

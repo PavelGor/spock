@@ -10,15 +10,13 @@ import java.security.NoSuchAlgorithmException;
 
 public class UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     private UserDao userDao;
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     private User getByName(String name) {return userDao.getByLogin(name);}
 
-    public User autenticate(String name, String password) throws SecurityException {
+    public User authenticate(String name, String password) throws SecurityException {
         User user = getByName(name);
 
         if (user != null) {
@@ -49,5 +47,13 @@ public class UserService {
         }
 
         return encryptedPassword.toString();
+    }
+
+    public String getUserNameById(int id){
+        return userDao.getUserNameById(id);
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }

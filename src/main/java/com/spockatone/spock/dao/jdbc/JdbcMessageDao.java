@@ -8,10 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class JdbcMessageDao implements MessageDao {
 
 
     private static final String GET_BY_USER_ID_SQL = "SELECT * FROM messages WHERE user_id = ?;";
-    private static final String INSERT_MESSAGE_SQL = "INSERT INTO messages (user_id, type, message_text) values (?, ?, ?);";
+    private static final String INSERT_MESSAGE_SQL = "INSERT INTO messages (user_id, type, message_text, time) values (?, ?, ?, ?);";
     private static final String UPDATE_VIEWED_SQL = "UPDATE messages SET viewed = TRUE where id = ?";
 
     private DataSource dataSource;
@@ -49,12 +47,13 @@ public class JdbcMessageDao implements MessageDao {
     }
 
     @Override
-    public void insertMessage(int userId, String type, String messageText) {
+    public void insertMessage(int userId, String type, String messageText, LocalDateTime betTime) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MESSAGE_SQL)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setString(2, type);
             preparedStatement.setString(3, messageText);
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(betTime));
             preparedStatement.executeQuery();
         } catch (SQLException e) {
             LOG.error("DB error during inserting message, with next text: {}", messageText, e);
